@@ -6,6 +6,7 @@
     <ul>
         {% for config in configs %}
         <li>
+            <a href="{% url 'pricing_tier' config.id %}">{{ config.name }}</a>
             {% if config.enabled %}
                 <span>Enabled</span>
             {% else %}
@@ -14,6 +15,8 @@
         </li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'pricing_config' %}">Add New Configuration</a>
 
 
 
