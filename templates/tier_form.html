@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h2>Add or Modify the Pricing Tier for {{ config.name }}</h2>
+    <form  method="post">
+        {% csrf_token %}
+        {% form.as_p %}
+        <input type="text" name="config.id" value="{{ config.id }}">
+        <button type="submit">Save</button>
+    </form>
+
+
+
+
+{% endblock %}

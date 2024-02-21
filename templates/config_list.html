@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h2>Pricing Configuration</h2>
+    <ul>
+        {% for config in configs %}
+        <li>
+            {% if config.enabled %}
+                <span>Enabled</span>
+            {% else %}
+                <span>Disabled</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+
+
+{% endblock %}
