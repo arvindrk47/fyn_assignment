@@ -82,3 +82,17 @@ class CalculatePricingAPIView(APIView):
 
         # Return the calculated price in the response
         return Response({'price': float(price)}, status=status.HTTP_200_OK)
+
+
+class LoggerInfoAPIView(APIView):
+    def get(self, request):
+        # Get information about loggers
+        root_logger = logging.getLogger()
+        loggers = [logger.name for logger in logging.Logger.manager.loggerDict.values()]
+
+        # Return the logger information in the response
+        response_data = {
+            'root_logger_level': logging.getLevelName(root_logger.level),
+            'loggers': loggers
+        }
+        return JsonResponse(response_data)
