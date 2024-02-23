@@ -84,8 +84,9 @@ You will get the GET REQUEST on the below format
 Views:
 PricingConfigAPIView: Handles the GET and POST requests for pricing configurations.
 Endpoint: 
-
-/api/calculate-pricing/
+```
+localhost:8000/api/calculate-pricing/
+```
 
 HTTP Methods: POST
 Description: This endpoint calculates the pricing based on input parameters such as distance, time, waiting duration, and the day of the week. It returns the calculated price.
@@ -113,6 +114,12 @@ Response:
 ```
 
 Using API Point logger-info will retrive the information of the log
+
+```
+localhost:8000/api/logger-info/
+```
+
+response
 
 ```
 {"root_logger_level": "WARNING", "loggers": ["concurrent.futures", "asyncio", "django.dispatch", "django", "django.utils.autoreload", "django.template", "django.db.models", "django.db.backends", "django.request", "django.server", "django.security.csrf", "django.db.backends.base", "django.db.backends.schema", "django.test", "app.forms", "app.views"]}
