@@ -39,8 +39,10 @@ Visit http://localhost:8000/ in your browser to view the application.
 
 ## API Endpoints
 
-Endpoint: /api/pricing-config/
-
+Endpoint: 
+```
+localhost:8000/api/pricing-config/
+```
 HTTP Methods: GET, POST
 Description: This endpoint is responsible for managing pricing configurations. It allows retrieving a list of all pricing configurations (GET), and creating a new pricing configuration (POST).
 
@@ -81,7 +83,9 @@ You will get the GET REQUEST on the below format
 
 Views:
 PricingConfigAPIView: Handles the GET and POST requests for pricing configurations.
-Endpoint: /api/calculate-pricing/
+Endpoint: 
+
+/api/calculate-pricing/
 
 HTTP Methods: POST
 Description: This endpoint calculates the pricing based on input parameters such as distance, time, waiting duration, and the day of the week. It returns the calculated price.
