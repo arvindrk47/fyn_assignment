@@ -1,0 +1,90 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Pricing config page styles */
+.pricing-config-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pricing-config-page h1 {
+  margin-bottom: 20px;
+}
+
+.pricing-config-page form {
+  margin-bottom: 20px;
+}
+
+/* Pricing tier page styles */
+.pricing-tier-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pricing-tier-page h1 {
+  margin-bottom: 20px;
+}
+
+.pricing-tier-page form {
+  margin-bottom: 20px;
+}

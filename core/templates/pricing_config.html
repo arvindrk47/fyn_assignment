@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing Configurations{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'core/pricing_config.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Pricing Configurations</h1>
+{% for config in pricing_configs %}
+  <h2>{{ config.name }}</h2>
+  <p>{{ config.description }}</p>
+{% endfor %}
+{% endblock %}

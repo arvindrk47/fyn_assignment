@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing Configurations{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'pricing/pricing_config_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Pricing Configurations</h1>
+<a href="{% url 'pricing_config_create' %}" class="btn btn-primary mb-3">Create New Configuration</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for config in pricing_configs %}
+      <tr>
+        <td>{{ config.name }}</td>
+        <td>{{ config.description }}</td>
+        <td>
+          <a href="{% url 'pricing_config_update' config.id %}" class="btn btn-secondary btn-sm">Edit</a>
+          <a href="{% url 'pricing_config_delete' config.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this configuration?')">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing Tiers{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'pricing/pricing_tier_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Pricing Tiers - {{ pricing_config.name }}</h1>
+<a href="{% url 'pricing_tier_create' config_pk=pricing_config.id %}" class="btn btn-primary mb-3">Create New Tier</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tier in pricing_tiers %}
+      <tr>
+        <td>{{ tier.name }}</td>
+        <td>{{ tier.description }}</td>
+        <td>
+          <a href="{% url 'pricing_tier_update' config_pk=pricing_config.id tier.id %}" class="btn btn-secondary btn-sm">Edit</a>
+          <a href="{% url 'pricing_tier_delete' config_pk=pricing_config.id tier.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this tier?')">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
