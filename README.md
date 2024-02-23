@@ -38,10 +38,47 @@ python manage.py runserver
 Visit http://localhost:8000/ in your browser to view the application.
 
 ## API Endpoints
+
 Endpoint: /api/pricing-config/
 
 HTTP Methods: GET, POST
 Description: This endpoint is responsible for managing pricing configurations. It allows retrieving a list of all pricing configurations (GET), and creating a new pricing configuration (POST).
+
+```
+{
+  "distance_base_price": 80.0,
+  "distance_additional_price": 30.0,
+  "time_multiplier_factor": 1.0,
+  "waiting_charges": 5.0,
+  "day_of_week": "Tue-Wed-Thur",
+  "active": true
+}
+
+
+
+```
+
+You will get the GET REQUEST on the below format
+
+```
+[
+    {
+        "id": 1,
+        "distance_base_price": "80.00",
+        "distance_additional_price": "30.00",
+        "time_multiplier_factor": "1.00",
+        "waiting_charges": "5.00",
+        "day_of_week": "Tue-Wed-Thur",
+        "active": true,
+        "created_at": "2024-02-23T05:21:44.434311Z",
+        "updated_at": "2024-02-23T05:21:44.435310Z",
+        "last_modified_at": "2024-02-23T05:21:44.431342Z",
+        "last_modified_by": null
+    }
+]
+
+```
+
 Views:
 PricingConfigAPIView: Handles the GET and POST requests for pricing configurations.
 Endpoint: /api/calculate-pricing/
@@ -51,6 +88,25 @@ Description: This endpoint calculates the pricing based on input parameters such
 Views:
 CalculatePricingAPIView: Handles the POST request for calculating pricing.
 
+```
+{
+  "distance": 10.5,
+  "time": 2.5,
+  "waiting_duration": 1.0,
+  "day_of_week": "Tue-Wed-Thur"
+}
+
+
+```
+
+Response:
+
+```
+{
+    "price": 402.5
+}
+
+```
 
 ## Testing
 

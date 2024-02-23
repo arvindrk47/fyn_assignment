@@ -1,5 +1,4 @@
 import logging
-from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from rest_framework.views import APIView
@@ -8,6 +7,8 @@ from rest_framework import status
 from .models import PricingConfig
 from .forms import PricingConfigForm
 from .serializers import PricingConfigSerializer
+from decimal import Decimal
+from rest_framework import status
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -47,12 +48,8 @@ class CalculatePricingAPIView(APIView):
         pricing_config = get_object_or_404(PricingConfig, day_of_week=day_of_week, active=True)
 
         # Perform the pricing calculation
-        price = (
-            pricing_config.distance_base_price
-            + (distance * pricing_config.distance_additional_price)
-            + (time * pricing_config.time_multiplier_factor)
-            + (waiting_duration * pricing_config.waiting_charges)
-        )
+        price = (pricing_config.distance_base_price + (distance * pricing_config.distance_additional_price)) + (
+                time * pricing_config.time_multiplier_factor) + (waiting_duration * pricing_config.waiting_charges)
 
         # Return the calculated price in the response
-        return JsonResponse({'price': float(price)})  # Convert back to float for JSON response
+        return Response({'price': float(price)}, status=status.HTTP_200_OK)
