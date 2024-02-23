@@ -108,6 +108,12 @@ Response:
 
 ```
 
+Using API Point logger-info will retrive the information of the log
+
+```
+{"root_logger_level": "WARNING", "loggers": ["concurrent.futures", "asyncio", "django.dispatch", "django", "django.utils.autoreload", "django.template", "django.db.models", "django.db.backends", "django.request", "django.server", "django.security.csrf", "django.db.backends.base", "django.db.backends.schema", "django.test", "app.forms", "app.views"]}
+
+```
 ## Testing
 
 ```

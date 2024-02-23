@@ -9,7 +9,8 @@ from .forms import PricingConfigForm
 from .serializers import PricingConfigSerializer
 from decimal import Decimal
 from rest_framework import status
-
+from django.views.generic import View
+from django.http import JsonResponse
 # Configure logger
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,8 @@ class PricingConfigAPIView(APIView):
             new_config = serializer.save()
             
             # Log the configuration change
+            username = request.user.username if request.user.is_authenticated else 'AnonymousUser'
+            logger.info(f"Pricing configuration created by {username}: {new_config}")
             logger.info(f"Pricing configuration created: {new_config}")
             
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -84,15 +87,9 @@ class CalculatePricingAPIView(APIView):
         return Response({'price': float(price)}, status=status.HTTP_200_OK)
 
 
-class LoggerInfoAPIView(APIView):
-    def get(self, request):
-        # Get information about loggers
-        root_logger = logging.getLogger()
-        loggers = [logger.name for logger in logging.Logger.manager.loggerDict.values()]
 
-        # Return the logger information in the response
-        response_data = {
-            'root_logger_level': logging.getLevelName(root_logger.level),
-            'loggers': loggers
-        }
-        return JsonResponse(response_data)
+class LoggerInfoAPIView(View):
+    def get(self, request):
+        root_logger_level = logging.getLevelName(logging.getLogger().getEffectiveLevel())
+        loggers = [logger.name if hasattr(logger, 'name') else str(logger) for logger in logging.Logger.manager.loggerDict.values() if not isinstance(logger, logging.PlaceHolder)]
+        return JsonResponse({'root_logger_level': root_logger_level, 'loggers': loggers})
