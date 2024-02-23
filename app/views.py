@@ -35,6 +35,35 @@ class PricingConfigAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, pk):
+        # Retrieve existing pricing configuration
+        pricing_config = get_object_or_404(PricingConfig, pk=pk)
+
+        # Deserialize the incoming data with the instance
+        serializer = PricingConfigForm(data=request.data, instance=pricing_config)
+        
+        if serializer.is_valid():
+            # Save the modified pricing configuration
+            updated_config = serializer.save()
+
+            # Log the configuration change
+            logger.info(f"Pricing configuration updated by {request.user}: {updated_config}")
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        # Retrieve existing pricing configuration
+        pricing_config = get_object_or_404(PricingConfig, pk=pk)
+
+        # Log the configuration removal
+        logger.info(f"Pricing configuration deleted by {request.user}: {pricing_config}")
+
+        # Delete the pricing configuration
+        pricing_config.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CalculatePricingAPIView(APIView):
     def post(self, request):
