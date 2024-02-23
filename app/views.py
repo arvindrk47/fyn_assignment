@@ -1,0 +1,58 @@
+import logging
+from decimal import Decimal
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import PricingConfig
+from .forms import PricingConfigForm
+from .serializers import PricingConfigSerializer
+
+# Configure logger
+logger = logging.getLogger(__name__)
+
+class PricingConfigAPIView(APIView):
+    def get(self, request):
+        # Fetch all pricing configurations
+        pricing_configs = PricingConfig.objects.all()
+        # Serialize and return the data
+        serializer = PricingConfigSerializer(pricing_configs, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        # Deserialize the incoming data
+        serializer = PricingConfigForm(data=request.data)
+        
+        if serializer.is_valid():
+            # Save the new pricing configuration
+            new_config = serializer.save()
+            
+            # Log the configuration change
+            logger.info(f"Pricing configuration created: {new_config}")
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CalculatePricingAPIView(APIView):
+    def post(self, request):
+        # Extract necessary parameters from request data
+        distance = Decimal(request.data.get('distance', 0))
+        time = Decimal(request.data.get('time', 0))
+        waiting_duration = Decimal(request.data.get('waiting_duration', 0))
+        day_of_week = request.data.get('day_of_week', '')
+
+        # Find the active pricing configuration for the given day
+        pricing_config = get_object_or_404(PricingConfig, day_of_week=day_of_week, active=True)
+
+        # Perform the pricing calculation
+        price = (
+            pricing_config.distance_base_price
+            + (distance * pricing_config.distance_additional_price)
+            + (time * pricing_config.time_multiplier_factor)
+            + (waiting_duration * pricing_config.waiting_charges)
+        )
+
+        # Return the calculated price in the response
+        return JsonResponse({'price': float(price)})  # Convert back to float for JSON response
